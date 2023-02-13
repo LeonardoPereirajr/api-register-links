@@ -7,39 +7,39 @@ app.use(cors());
 
 const port = process.env.PORT || 3001;
 
-const users = [];
+const links = [];
 
 app.get("/", (req, res) => {
-  return res.json("hello world");
+  return res.json("app links");
 });
 
-app.get("/users", (req, res) => {
-  return res.json(users);
+app.get("/api/links", (req, res) => {
+  return res.json(links);
 });
 
-app.post("/users", (req, res) => {
+app.post("/api/links", (req, res) => {
   const { name, email } = req.body;
 
-  const newUser = {
+  const newLink = {
     id: Math.random().toString(36),
-    name,
-    email,
+    title,
+    link,
   };
 
-  users.push(newUser);
-  return res.json(newUser);
+  links.push(newLink);
+  return res.json(newLink);
 });
 
-app.delete("/users/:id", (req, res) => {
+app.delete("/api/links/:id", (req, res) => {
   const { id } = req.params;
 
-  const index = users.findIndex((user) => user.id === id);
+  const index = links.findIndex((link) => link.id === id);
 
   if (index < 0) {
     return res.status(404).json({ error });
   }
 
-  users.splice(index, 1);
+  links.splice(index, 1);
   return res.status(204).json();
 });
 
